@@ -176,10 +176,66 @@ function menuView($data) {
     <?php
 }
 
-function editView() {
+function editView($data) {
     ?>
-
-    <?php
+    <div>
+        <a href="index.php">
+            <h1> Original Pizza Place</h1>
+        </a>
+        <h2> Pie Editor </h2>
+        <input type="text" placeholder="Pie Name">
+        <input type="text" placeholder="Price">
+        <div class="table-center">
+            <table id="Pie Editor">
+                <tr>
+                    <th>Toppings:</th>
+                </tr>
+                <tr>
+                    <td> 
+                        <input type="checkbox" id="red-sauce">
+                        <label for="red-sauce">Red Sauce</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="green-peppers">
+                        <label for="green-peppers">Green Peppers</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="mozarella">
+                        <label for="mozarella">Mozarella</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="ham">
+                        <label for="ham">Ham</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="pepperoni">
+                        <label for="pepperoni">Pepperoni</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="mushrooms">
+                        <label for="mushrooms">Mushrooms</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="pineapple">
+                        <label for="pineapple">Pineapple</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="anchovies">
+                        <label for="anchovies">Anchovies</label>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center">
+                <button class="create">Create</button>
+            </div>
+        </div>
+    <?php    
 }
 
 function detailView() {
