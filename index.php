@@ -194,58 +194,61 @@ function editView($data) {
             <h1> Original Pizza Place</h1>
         </a>
         <h2> Pie Editor </h2>
-        <input type="text" placeholder="Pie Name">
-        <input type="text" placeholder="Price">
-        <div class="table-center">
-            <table id="Pie Editor">
-                <tr>
-                    <th>Toppings:</th>
-                </tr>
-                <tr>
-                    <td> 
-                        <input type="checkbox" id="red-sauce">
-                        <label for="red-sauce">Red Sauce</label>
-                    </td>
-                    <td>
-                        <input type="checkbox" id="green-peppers">
-                        <label for="green-peppers">Green Peppers</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" id="mozarella">
-                        <label for="mozarella">Mozarella</label>
-                    </td>
-                    <td>
-                        <input type="checkbox" id="ham">
-                        <label for="ham">Ham</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" id="pepperoni">
-                        <label for="pepperoni">Pepperoni</label>
-                    </td>
-                    <td>
-                        <input type="checkbox" id="mushrooms">
-                        <label for="mushrooms">Mushrooms</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" id="pineapple">
-                        <label for="pineapple">Pineapple</label>
-                    </td>
-                    <td>
-                        <input type="checkbox" id="anchovies">
-                        <label for="anchovies">Anchovies</label>
-                    </td>
-                </tr>
-            </table>
-            <div class="text-center">
-                <button class="create">Create</button>
-            </div>
-        </div>
+        <form action="index.php" method="post">
+            <input type="text" placeholder="Pie Name" name="name">
+            <input type="text" placeholder="Price" name="price">
+            <div class="table-center">
+                <table id="Pie Editor">
+                    <tr>
+                        <th>Toppings:</th>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <input type="checkbox" id="red-sauce" name="red-sauce">
+                            <label for="red-sauce">Red Sauce</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="green-peppers" name="green-peppers">
+                            <label for="green-peppers">Green Peppers</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="mozarella" name="mozarella">
+                            <label for="mozarella">Mozarella</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="ham" name="ham">
+                            <label for="ham">Ham</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="pepperoni" name="pepperoni">
+                            <label for="pepperoni">Pepperoni</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="mushrooms" name="mushrooms">
+                            <label for="mushrooms">Mushrooms</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="pineapple" name="pineapple">
+                            <label for="pineapple">Pineapple</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="anchovies" name="anchovies">
+                            <label for="anchovies">Anchovies</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="text-center">
+                    <button class="create" name="add">Create</button>
+                </div>
+            </div>    
+        </form>
+
     <?php    
 }
 
@@ -347,24 +350,27 @@ function deletePizzaEntry($data)
     return $data["ENTRIES"];
 }
 
-function checkForPizzaUpdates() {
-    $name = (isset($_REQUEST['name'])) 
-        ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
-        : "";
-    $pizzaInfo = (isset($_REQUEST['pizzaInfo'])) 
-        ? filter_var($_REQUEST['pizzaInfo'], FILTER_SANITIZE_SPECIAL_CHARS) 
-        : "";
-    
-    if ($name == "" || $pizzaInfo == "") {
-        return $entries;
+function checkForPizzaUpdates($entries) {
+    if(array_key_exists("add", $_POST)) {
+        echo "here";
     }
+    // $name = (isset($_REQUEST['name'])) 
+    //     ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
+    //     : "";
+    // $pizzaInfo = (isset($_REQUEST['pizzaInfo'])) 
+    //     ? filter_var($_REQUEST['pizzaInfo'], FILTER_SANITIZE_SPECIAL_CHARS) 
+    //     : "";
+    
+    // if ($name == "" || $pizzaInfo == "") {
+    //     return $entries;
+    // }
 
-    if(!array_key_exists($name, $entries))
-        $entries = array_merge([$name => $pizzaInfo], $entries);
-    else
-        $entries[$name] = [$pizzaInfo];
+    // if(!array_key_exists($name, $entries))
+    //     $entries = array_merge([$name => $pizzaInfo], $entries);
+    // else
+    //     $entries[$name] = [$pizzaInfo];
 
-    file_put_contents(PIZZA_FILE, serialize($entries));
+    // file_put_contents(PIZZA_FILE, serialize($entries));
 
-    return $entries;
+    return;
 }
