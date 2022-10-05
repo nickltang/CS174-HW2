@@ -16,25 +16,21 @@ $activity();
 function landingController()
 {
     // Dummy data
-    $data["PIZZA_ENTRIES"] = [
-        'Fromage Delight' => [
-            'price' => 12,
-            'visits' => 30,
-            'ingredients' => ['cheese', 'pepperoni']
-        ],
-        'Peppy Pizzazz' => [
-            'price' => 30,
-            'visits' => 5,
-            'ingredients' => []
-        ]
-    ];
+    // $data["PIZZA_ENTRIES"] = [
+    //     'Fromage Delight' => [
+    //         'price' => 12,
+    //         'visits' => 30,
+    //         'ingredients' => ['cheese', 'pepperoni']
+    //     ],
+    //     'Peppy Pizzazz' => [
+    //         'price' => 30,
+    //         'visits' => 5,
+    //         'ingredients' => []
+    //     ]
+    // ];
     // Gets pizza entries from pizza.txt file
-    // $data["PIZZA_ENTRIES"] = getPizzaEntries();
-
+    $data["PIZZA_ENTRIES"] = getPizzaEntries();
     $data["PIZZA_ENTRIES"] = checkForPizzaUpdates($data["PIZZA_ENTRIES"]);   
-
-
-    var_dump($_POST);
 
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
@@ -143,7 +139,7 @@ function menuView($data) {
                                 <td>$<?=$pizzaInfo["price"]?></td>
                                 <td>
                                     <?php
-                                        $numHearts = str_repeat("&#128151", log($pizzaInfo["visits"], 5));
+                                        $numHearts = str_repeat("&#128151", floor(log($pizzaInfo["visits"], 5)));
                                     ?>
                                     <?=$numHearts?>
                                 </td> 
@@ -204,41 +200,41 @@ function editView($data) {
                     </tr>
                     <tr>
                         <td> 
-                            <input type="checkbox" id="red-sauce" name="red-sauce">
+                            <input type="checkbox" id="red-sauce" name="toppings[red-sauce]">
                             <label for="red-sauce">Red Sauce</label>
                         </td>
                         <td>
-                            <input type="checkbox" id="green-peppers" name="green-peppers">
+                            <input type="checkbox" id="green-peppers" name="toppings[green-peppers]">
                             <label for="green-peppers">Green Peppers</label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="checkbox" id="mozarella" name="mozarella">
+                            <input type="checkbox" id="mozarella" name="toppings[mozarella]">
                             <label for="mozarella">Mozarella</label>
                         </td>
                         <td>
-                            <input type="checkbox" id="ham" name="ham">
+                            <input type="checkbox" id="ham" name="toppings[ham]">
                             <label for="ham">Ham</label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="checkbox" id="pepperoni" name="pepperoni">
+                            <input type="checkbox" id="pepperoni" name="toppings[pepperoni]">
                             <label for="pepperoni">Pepperoni</label>
                         </td>
                         <td>
-                            <input type="checkbox" id="mushrooms" name="mushrooms">
+                            <input type="checkbox" id="mushrooms" name="toppings[mushrooms]">
                             <label for="mushrooms">Mushrooms</label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="checkbox" id="pineapple" name="pineapple">
+                            <input type="checkbox" id="pineapple" name="toppings[pineapple]">
                             <label for="pineapple">Pineapple</label>
                         </td>
                         <td>
-                            <input type="checkbox" id="anchovies" name="anchovies">
+                            <input type="checkbox" id="anchovies" name="toppings[anchovies]">
                             <label for="anchovies">Anchovies</label>
                         </td>
                     </tr>
@@ -351,26 +347,42 @@ function deletePizzaEntry($data)
 }
 
 function checkForPizzaUpdates($entries) {
+    // Add/Edit Pizza
     if(array_key_exists("add", $_POST)) {
-        echo "here";
+        $views = 0;
+
+        // If pizza views in entries, keep existing views value
+        if(array_key_exists($_POST["name"], $entries)) 
+            $views = $entries[$_POST["name"]["views"]];
+
+        // Format toppings into array
+        $addToppings = [];
+        foreach($_POST["toppings"] as $topping => $status) {
+            if($status == "on")
+                array_push($addToppings, $topping);
+        }
+
+        // Update entries array
+        $entries[$_POST["name"]] = [
+            "price" => $_POST["price"],
+            "views" => $views,
+            "toppings" => $addToppings
+        ];
+        // print_r($entries);
     }
+
+    if(array_key_exists("delete", $_POST)) {
+
+    }
+    
+    file_put_contents(PIZZA_FILE, serialize($entries));
+    $_POST = [];
     // $name = (isset($_REQUEST['name'])) 
     //     ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
     //     : "";
     // $pizzaInfo = (isset($_REQUEST['pizzaInfo'])) 
     //     ? filter_var($_REQUEST['pizzaInfo'], FILTER_SANITIZE_SPECIAL_CHARS) 
     //     : "";
-    
-    // if ($name == "" || $pizzaInfo == "") {
-    //     return $entries;
-    // }
 
-    // if(!array_key_exists($name, $entries))
-    //     $entries = array_merge([$name => $pizzaInfo], $entries);
-    // else
-    //     $entries[$name] = [$pizzaInfo];
-
-    // file_put_contents(PIZZA_FILE, serialize($entries));
-
-    return;
+    return $entries;
 }
