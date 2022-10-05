@@ -31,8 +31,10 @@ function landingController()
     // Gets pizza entries from pizza.txt file
     // $data["PIZZA_ENTRIES"] = getPizzaEntries();
 
-    // Serializes pizza entries
-    // $data["PIZZA_ENTRIES"] = processNewBlogEntries($data["BLOG_ENTRIES"]);
+    $data["PIZZA_ENTRIES"] = checkForPizzaUpdates($data["PIZZA_ENTRIES"]);   
+
+
+    var_dump($_POST);
 
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
@@ -50,6 +52,8 @@ function detailController()
         ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
         : "";
     $entries = getPizzaEntries();
+
+    $data["POST"] = $entries[$data["TITLE"]];
     
 
     // maybe in the future could modify so also support RSS out
@@ -67,14 +71,13 @@ function confirmController()
     $data["NAME"] = (isset($_REQUEST['name'])) 
         ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
         : "";
-    $entries = getPizzaEntries();
+    $data["ENTRIES"] = getPizzaEntries();
+    $data["ENTRIES"] = deletePizzaEntry($data);
     
-
-    // maybe in the future could modify so also support RSS out
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
         : "htmlLayout";
-    $layout($data, "editView");
+    $layout($data, "confirmView");
 }
 
 /**
@@ -85,10 +88,8 @@ function editController()
     $data["NAME"] = (isset($_REQUEST['name'])) 
         ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
         : "";
-    $entries = getPizzaEntries();
-    
+    $data["ENTRIES"] = getPizzaEntries(); 
 
-    // maybe in the future could modify so also support RSS out
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
         : "htmlLayout";
@@ -147,7 +148,7 @@ function menuView($data) {
                                     <?=$numHearts?>
                                 </td> 
                                 <td> 
-                                    <a href=index.php?a=edit&name=<?=urlencode($name)?>>
+                                    <a href=index.php?a=edit&name=<?=urlencode($name)?>&pizzaInfo=<?=urlencode(serialize($pizzaInfo))?>>
                                         <button class="editbtn">✏️</button>
                                     </a>
                                 </td>
@@ -167,9 +168,19 @@ function menuView($data) {
         }
         ?>
         <div class="text-center">
-            <a href=index.php?a=edit&name=<?=urlencode($name)?>">
-                <button class="addPieBtn">Add Pie</button></th>
-            </a>
+            <?php
+                if(!empty($data["PIZZA_ENTRIES"])) {
+            ?>
+                <a href=index.php?a=edit&name=<?=urlencode($name)?>>
+                    <button class="addPieBtn">Add Pie</button></th>
+                </a>
+            <?php
+                }
+                else
+            ?>
+                <a href=index.php?a=edit>
+                    <button class="addPieBtn">Add Pie</button></th>
+                </a>        
         </div>    
     </div>
     
@@ -188,9 +199,23 @@ function detailView() {
     <?php
 }
 
-function confirmView() {
+function confirmView($data) {
     ?>
-
+    <div>
+        <a href="index.php">
+            <h1> Original Pizza Place</h1>
+        </a>
+        <p>Are you sure you want to delete <b><?=$data["NAME"]?></b>?</p>
+        <form method="post" action="index.php">
+            <a href="index.php">
+                <input type="button" name="delete">Confirm</button>
+            </a>
+            <a href=index.php?name=<?urlencode($data["NAME"])?>>
+                <input type="button">Cancel</button>
+            </a>    
+        </form>
+        
+    </div>
     <?php
 }
 
@@ -224,17 +249,21 @@ function getPizzaEntries()
  */
 function addPizzaEntry($entries)
 {
-    // check for 
-    $title = (isset($_REQUEST['title'])) ?
-        filter_var($_REQUEST['title'], FILTER_SANITIZE_STRING) : "";
-    $post = (isset($_REQUEST['post'])) ?
-        filter_var($_REQUEST['post'], FILTER_SANITIZE_STRING) : "";
+    $name = (isset($_REQUEST['name'])) 
+        ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
+        : "";
+    $pizzaInfo = (isset($_REQUEST['pizzaInfo'])) 
+        ? filter_var($_REQUEST['pizzaInfo'], FILTER_SANITIZE_SPECIAL_CHARS) 
+        : "";
     
-    if ($title == "" || $post == "") {
+    if ($name == "" || $pizzaInfo == "") {
         return $entries;
     }
 
-    $entries = array_merge([$title => $post], $entries);
+    if(!array_key_exists($name, $entries))
+        $entries = array_merge([$name => $pizzaInfo], $entries);
+    else
+        $entries[$name] = [$pizzaInfo];
 
     file_put_contents(PIZZA_FILE, serialize($entries));
 
@@ -242,19 +271,42 @@ function addPizzaEntry($entries)
 }
 
 
-function deletePizzaEntry($entries)
+function deletePizzaEntry($data)
 {
-    // check for 
-    $title = (isset($_REQUEST['title'])) ?
-        filter_var($_REQUEST['title'], FILTER_SANITIZE_STRING) : "";
-    $post = (isset($_REQUEST['post'])) ?
-        filter_var($_REQUEST['post'], FILTER_SANITIZE_STRING) : "";
+    // Check for pizza name
+    $name = (isset($_REQUEST['NAME'])) ?
+        filter_var($_REQUEST['NAME'], FILTER_SANITIZE_SPECIAL_CHARS) : "";
     
-    if ($title == "" || $post == "") {
+    if ($name == "") {
+        return $data["ENTRIES"];
+    }
+    if(isset($_POST["delete"])) {
+       unset($data["ENTRIES"][$name]); 
+       echo "Deleting";
+    }
+        
+
+    file_put_contents(PIZZA_FILE, serialize($data["ENTRIES"]));
+    
+    return $data["ENTRIES"];
+}
+
+function checkForPizzaUpdates() {
+    $name = (isset($_REQUEST['name'])) 
+        ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
+        : "";
+    $pizzaInfo = (isset($_REQUEST['pizzaInfo'])) 
+        ? filter_var($_REQUEST['pizzaInfo'], FILTER_SANITIZE_SPECIAL_CHARS) 
+        : "";
+    
+    if ($name == "" || $pizzaInfo == "") {
         return $entries;
     }
 
-    $entries = array_merge([$title => $post], $entries);
+    if(!array_key_exists($name, $entries))
+        $entries = array_merge([$name => $pizzaInfo], $entries);
+    else
+        $entries[$name] = [$pizzaInfo];
 
     file_put_contents(PIZZA_FILE, serialize($entries));
 
