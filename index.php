@@ -424,10 +424,7 @@ function getPizzaEntries()
 
 function checkForPizzaUpdates($entries) {
     // Add/Edit Pizza
-    if(array_key_exists("add", $_POST)) {
-        $visits = 0;
-        // If pizza views in entries, keep existing views value
-
+    if(array_key_exists("add", $_POST) && $_POST["name"] != "") {
         // Format toppings into array
         $addToppings = [];
         foreach($_POST["toppings"] as $topping => $status) {
@@ -435,12 +432,15 @@ function checkForPizzaUpdates($entries) {
                 array_push($addToppings, $topping);
         }
 
-        // Add/update pizza in entries array
-        if(array_key_exists($_POST["name"], $entries)) {
-            $entries[$_POST["name"]]["price"] = $_POST["price"];
-            $entries[$_POST["name"]]["toppings"] = $addToppings;
+        $sanitizedName = filter_var($_POST["name"], FILTER_SANITIZE_SPECIAL_CHARS);
+        $sanitizedPrice = filter_var($_POST[""])
+
+        // Add or update pizza in entries array
+        if(array_key_exists($sanitizedName, $entries)) {
+            $entries[$sanitizedName]["price"] = $_POST["price"];
+            $entries[$sanitizedName]["toppings"] = $addToppings;
         } else {
-            $entries[$_POST["name"]] = [
+            $entries[$sanitizedName] = [
                 "price" => $_POST["price"],
                 "visits" => 0,
                 "toppings" => $addToppings
@@ -452,17 +452,8 @@ function checkForPizzaUpdates($entries) {
     if(isset($_REQUEST['delete']) && $_REQUEST['delete'] == 'true' && isset($_REQUEST['name'])) {
         unset($entries[$_REQUEST['name']]); 
     }
-
     
     file_put_contents(PIZZA_FILE, serialize($entries));
-
-    // Sanitize input examples, need to implement for text input
-    // $name = (isset($_REQUEST['name'])) 
-    //     ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
-    //     : "";
-    // $pizzaInfo = (isset($_REQUEST['pizzaInfo'])) 
-    //     ? filter_var($_REQUEST['pizzaInfo'], FILTER_SANITIZE_SPECIAL_CHARS) 
-    //     : "";
 
     return $entries;
 }
