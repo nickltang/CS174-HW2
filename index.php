@@ -276,9 +276,13 @@ function detailView($data) {
             ?>
                 <h2> $<?=$name?> </h2>
                 <h3>Price: $<?=$pizzaInfo["price"]?></h3>
+                <?php
                 foreach($data["PIZZA_ENTRIES"] as $key => $value) {
-                    
+                ?>
+                    <li> $<?=$value?> </li>
+                <?php
                 }
+                ?>
                 <a href="LandingPage.html">Back</a>
             </div>
             <div id="pizza-style">
