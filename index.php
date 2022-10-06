@@ -48,7 +48,7 @@ function detailController()
         ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
         : "";
     $entries = getPizzaEntries();
-
+    $entries[$data["name"]["visits"]];
     $data["POST"] = $entries[$data["TITLE"]];
     
 
@@ -56,7 +56,7 @@ function detailController()
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
         : "htmlLayout";
-    $layout($data, "editView");
+    $layout($data, "detailView");
 }
 
 /**
@@ -256,9 +256,41 @@ function editView($data) {
 }
 
 
-function detailView() {
+function detailView($data) {
     ?>
-
+    <div>
+        <a href="index.php">
+            <h1> Original Pizza Place</h1>
+        </a>
+        <h2> Detail </h2>
+        <?php
+        if(!empty($data["PIZZA_ENTRIES"])) {
+        ?>
+            <div class="text-center">
+            <?php
+            foreach($data["PIZZA_ENTRIES"] as $name => $pizzaInfo) {
+            ?>
+                <h2> $<?=$name?> </h2>
+                <h3>Price: $<?=$pizzaInfo["price"]?></h3>
+                foreach($data["PIZZA_ENTRIES"] as $key => $value) {
+                    
+                }
+                <a href="LandingPage.html">Back</a>
+            </div>
+            <div id="pizza-style">
+                <div id="crust">
+                    <div id= "pizza-sauce">                
+                        <div id="cheese"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <?php
+            }
+            ?>
+        <?php
+        }
+        ?>
     <?php
 }
 
