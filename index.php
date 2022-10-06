@@ -27,7 +27,7 @@ function landingController()
     //         'visits' => 5,
     //         'toppings' => []
     //     ]
-    // ];
+    // ];C
     // Gets pizza entries from pizza.txt file
     $data["PIZZA_ENTRIES"] = getPizzaEntries();
     $data["PIZZA_ENTRIES"] = checkForPizzaUpdates($data["PIZZA_ENTRIES"]);   
@@ -191,12 +191,16 @@ function menuView($data) {
 
 function editView($data) {
     var_dump($data);
+    $header = "Add a Pie";
+    if($data["NAME"] != "") {
+        $header = "Pie Editor";
+    }
     ?>
     <div>
         <a href="index.php">
-            <h1> Original Pizza Place</h1>
+            <h1>Original Pizza Place</h1>
         </a>
-        <h2>Add a Pie</h2>
+        <h2><?=$header?></h2>
         <form action="index.php" method="post">
             <input type="text" placeholder="Pie Name" name="name">
             <input type="text" placeholder="Price" name="price">
