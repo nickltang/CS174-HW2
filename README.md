@@ -2,7 +2,7 @@
 Group Members: 
 - Howell DeGuzman, 013978029
 - Nick Tang, 014274559
-- Tiffany Phan, 
+- Tiffany Phan, 014112969
 
 If error message below occurs
 ```
