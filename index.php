@@ -368,84 +368,84 @@ function detailView($data) {
             </div>
             <div id="pizza-style">
                 <div id="crust">
-                    <?php
-                    if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
-                    ?> 
-                        <div id="pizza-sauce">
-                    <?php
-                    }    
-                    ?>
-                        <div id="cheese"></div>
+                    <div id="cheese">
                         <?php
-                        if(isset($data["pizzaInfo"]) && in_array("pepperoni", $data["pizzaInfo"]["toppings"])) {
+                        if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
                         ?> 
-                            <div id="pepperoni-one"></div>
-                            <div id="pepperoni-two"></div>
-                            <div id="pepperoni-three"></div>
+                            <div id="pizza-sauce">
                         <?php
-                        }
+                        }    
                         ?>
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("mushrooms", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="mushroom-one"></div>
-                            <div id="mushroom-two"></div>
-                            <div id="mushroom-three"></div>
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("mozzarella", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="mozzarella-one"></div>
-                            <div id="mozzarella-two"></div>
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("pineapple", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="pineapple-one"></div>
-                            <div id="pineapple-two"></div>
-                        <?php
-                        }
-                        ?>  
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("green-peppers", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="green-pepper-one"></div>
-                            <div id="green-pepper-two"></div>
-                            <div id="green-pepper-three"></div>
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("ham", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="ham-one"></div>
-                            <div id="ham-two"></div>
-                            <div id="ham-three"></div>
-                        <?php
-                        }
+                            <?php
+                            if(isset($data["pizzaInfo"]) && in_array("pepperoni", $data["pizzaInfo"]["toppings"])) {
+                            ?> 
+                                <div id="pepperoni-one"></div>
+                                <div id="pepperoni-two"></div>
+                                <div id="pepperoni-three"></div>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if(isset($data["pizzaInfo"]) && in_array("mushrooms", $data["pizzaInfo"]["toppings"])) {
+                            ?>
+                                <div id="mushroom-one"></div>
+                                <div id="mushroom-two"></div>
+                                <div id="mushroom-three"></div>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if(isset($data["pizzaInfo"]) && in_array("mozzarella", $data["pizzaInfo"]["toppings"])) {
+                            ?>
+                                <div id="mozzarella-one"></div>
+                                <div id="mozzarella-two"></div>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if(isset($data["pizzaInfo"]) && in_array("pineapple", $data["pizzaInfo"]["toppings"])) {
+                            ?>
+                                <div id="pineapple-one"></div>
+                                <div id="pineapple-two"></div>
+                            <?php
+                            }
+                            ?>  
+                            <?php
+                            if(isset($data["pizzaInfo"]) && in_array("green-peppers", $data["pizzaInfo"]["toppings"])) {
+                            ?>
+                                <div id="green-pepper-one"></div>
+                                <div id="green-pepper-two"></div>
+                                <div id="green-pepper-three"></div>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if(isset($data["pizzaInfo"]) && in_array("ham", $data["pizzaInfo"]["toppings"])) {
+                            ?>
+                                <div id="ham-one"></div>
+                                <div id="ham-two"></div>
+                                <div id="ham-three"></div>
+                            <?php
+                            }
+                            ?> 
+                            <?php
+                            if(isset($data["pizzaInfo"]) && in_array("anchovies", $data["pizzaInfo"]["toppings"])) {
+                            ?> 
+                                <div id="anchovies-one"></div>
+                                <div id="anchovies-two"></div>
+                                <div id="anchovies-three"></div>
+                            <?php
+                            }
+                            ?>   
+                        <?php  
+                        if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
                         ?> 
+                            </div> 
                         <?php
-                        if(isset($data["pizzaInfo"]) && in_array("anchovies", $data["pizzaInfo"]["toppings"])) {
-                        ?> 
-                            <div id="anchovies-one"></div>
-                            <div id="anchovies-two"></div>
-                            <div id="anchovies-three"></div>
-                        <?php
-                        }
-                        ?>   
-                    <?php  
-                    if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
-                    ?> 
-                        </div> 
-                    <?php
-                    }    
-                    ?>      
+                        }    
+                        ?>      
+                    </div>
                 </div>
-            </div>
             </div>
         <?php
         }
@@ -492,8 +492,8 @@ function getPizzaEntries()
 
 
 function checkForPizzaUpdates($entries) {
-    // Add/Edit Pizza
-    if(array_key_exists("add", $_POST) && $_POST["name"] != "") {
+    // Add/Edit Pizza Logic
+    if(array_key_exists("add", $_POST) && $_POST["name"] != "" && array_key_exists("toppings", $_POST)) {
         // Format toppings into array
         $addToppings = [];
         foreach($_POST["toppings"] as $topping => $status) {
@@ -501,27 +501,32 @@ function checkForPizzaUpdates($entries) {
                 array_push($addToppings, $topping);
         }
 
+        // Sanitize inputs
         $sanitizedName = filter_var($_POST["name"], FILTER_SANITIZE_SPECIAL_CHARS);
         $sanitizedPrice = filter_var($_POST["price"], FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        // Check for null price
+        if($sanitizedPrice == "")
+            $sanitizedPrice = 0;
 
         // Add or update pizza in entries array
         if(array_key_exists($sanitizedName, $entries)) {
-            $entries[$sanitizedName]["price"] = $_POST["price"];
+            $entries[$sanitizedName]["price"] = $sanitizedPrice;
             $entries[$sanitizedName]["toppings"] = $addToppings;
         } else {
             $entries[$sanitizedName] = [
-                "price" => $_POST["price"],
+                "price" => $sanitizedPrice,
                 "visits" => 0,
                 "toppings" => $addToppings
             ];    
         }        
     }
 
-    // Delete Pizza
+    // Delete Pizza Logic
     if(isset($_REQUEST['delete']) && $_REQUEST['delete'] == 'true' && isset($_REQUEST['name'])) {
         unset($entries[$_REQUEST['name']]); 
     }
-    
+
     file_put_contents(PIZZA_FILE, serialize($entries));
 
     return $entries;
