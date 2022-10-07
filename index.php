@@ -378,7 +378,7 @@ function detailView($data) {
                     }    
                     ?>
                         <?php
-                        if(isset($data["pizzaInfo"]) && in_array("mozzarella", $data["pizzaInfo"]["toppings"])) {
+                        if(isset($data["pizzaInfo"]) && in_array("cheese", $data["pizzaInfo"]["toppings"])) {
                         ?>
                             <div id="cheese"></div>
                         <?php
