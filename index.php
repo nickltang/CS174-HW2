@@ -383,6 +383,31 @@ function detailView($data) {
                         }
                         ?>
                         <?php
+                        if(isset($data["pizzaInfo"]) && in_array("pepperoni", $data["pizzaInfo"]["toppings"])) {
+                        ?> 
+                            <div id="pepperoni-one"></div>
+                            <div id="pepperoni-two"></div>
+                            <div id="pepperoni-three"></div>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if(isset($data["pizzaInfo"]) && in_array("mushrooms", $data["pizzaInfo"]["toppings"])) {
+                        ?>
+                            <div id="mushroom-one"></div>
+                            <div id="mushroom-two"></div>
+                            <div id="mushroom-three"></div>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if(isset($data["pizzaInfo"]) && in_array("pineapple", $data["pizzaInfo"]["toppings"])) {
+                        ?>
+                            <div id="pineapple"></div>
+                        <?php
+                        }
+                        ?>  
+                        <?php
                         if(isset($data["pizzaInfo"]) && in_array("green-peppers", $data["pizzaInfo"]["toppings"])) {
                         ?>
                             <div id="green-pepper-one"></div>
@@ -397,31 +422,6 @@ function detailView($data) {
                             <div id="ham-one"></div>
                             <div id="ham-two"></div>
                             <div id="ham-three"></div>
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("pepperoni", $data["pizzaInfo"]["toppings"])) {
-                        ?> 
-                            <div id="pepperoni-one"></div>
-                            <div id="pepperoni-two"></div>
-                            <div id="pepperoni-three"></div>
-                        <?php
-                        }
-                        ?> 
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("mushrooms", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="mushroom-one"></div>
-                            <div id="mushroom-two"></div>
-                            <div id="mushroom-three"></div>
-                        <?php
-                        }
-                        ?> 
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("pineapple", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="pineapple"></div>
                         <?php
                         }
                         ?> 
