@@ -159,7 +159,7 @@ function menuView($data) {
         <?php
         }
         ?>
-        <div class="text-center">
+        <div>
             <a href=index.php?a=edit>
                 <button class="addPieBtn">Add Pie</button></th>
             </a>      
@@ -220,11 +220,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("red-sauce", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="red-sauce" name="toppings[red-sauce]" checked>
+                                <input type="checkbox" name="toppings[red-sauce]" checked>
                             <?php
                             } else {
                             ?>
-                                <input type="checkbox" id="red-sauce" name="toppings[red-sauce]">
+                                <input type="checkbox" name="toppings[red-sauce]">
                             <?php
                             }
                             ?>
@@ -234,11 +234,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("green-peppers", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="green-peppers" name="toppings[green-peppers]" checked>
+                                <input type="checkbox" name="toppings[green-peppers]" checked>
                             <?php
                             } else {
                             ?> 
-                                <input type="checkbox" id="green-peppers" name="toppings[green-peppers]">
+                                <input type="checkbox" name="toppings[green-peppers]">
                             <?php
                             }
                             ?>
@@ -250,11 +250,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("mozarella", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="mozarella" name="toppings[mozarella]" checked>
+                                <input type="checkbox" name="toppings[mozarella]" checked>
                             <?php
                             } else {
                             ?> 
-                                <input type="checkbox" id="mozarella" name="toppings[mozarella]">
+                                <input type="checkbox" name="toppings[mozarella]">
                             <?php
                             }
                             ?>
@@ -264,11 +264,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("ham", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="ham" name="toppings[ham]" checked>
+                                <input type="checkbox" name="toppings[ham]" checked>
                             <?php
                             } else {
                             ?> 
-                                <input type="checkbox" id="ham" name="toppings[ham]">
+                                <input type="checkbox" name="toppings[ham]">
                             <?php
                             }
                             ?>
@@ -280,11 +280,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("pepperoni", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="pepperoni" name="toppings[pepperoni]" checked>
+                                <input type="checkbox" name="toppings[pepperoni]" checked>
                             <?php
                             } else {
                             ?> 
-                                <input type="checkbox" id="pepperoni" name="toppings[pepperoni]">
+                                <input type="checkbox" name="toppings[pepperoni]">
                             <?php
                             }
                             ?>
@@ -294,11 +294,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("mushrooms", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="mushrooms" name="toppings[mushrooms]" checked>
+                                <input type="checkbox" name="toppings[mushrooms]" checked>
                             <?php
                             } else {
                             ?> 
-                                 <input type="checkbox" id="mushrooms" name="toppings[mushrooms]">
+                                 <input type="checkbox" name="toppings[mushrooms]">
                             <?php
                             }
                             ?>
@@ -310,11 +310,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("pineapple", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="pineapple" name="toppings[pineapple]" checked>
+                                <input type="checkbox"  name="toppings[pineapple]" checked>
                             <?php
                             } else {
                             ?> 
-                                <input type="checkbox" id="pineapple" name="toppings[pineapple]">
+                                <input type="checkbox" name="toppings[pineapple]">
                             <?php
                             }
                             ?>
@@ -324,11 +324,11 @@ function editView($data) {
                             <?php
                             if(isset($data["currentPizza"]) && in_array("anchovies", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" id="anchovies" name="toppings[anchovies]" checked>
+                                <input type="checkbox" name="toppings[anchovies]" checked>
                             <?php
                             } else {
                             ?> 
-                                <input type="checkbox" id="anchovies" name="toppings[anchovies]">
+                                <input type="checkbox" name="toppings[anchovies]">
                             <?php
                             }
                             ?>
@@ -336,7 +336,7 @@ function editView($data) {
                         </td>
                     </tr>
                 </table>
-                <div class="text-center">
+                <div>
                     <button class="create" name="add">Create</button>
                 </div>
             </div>    

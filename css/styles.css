@@ -115,7 +115,7 @@
     height: 0;
     border: .2in solid transparent;
     border-top: -.9in;
-    border-bottom: .2in solid yellow;
+    border-bottom: .2in solid rgb(243, 207, 6);
 }
 #green-pepper-one{
     position: absolute;
