@@ -248,17 +248,17 @@ function editView($data) {
                     <tr>
                         <td>
                             <?php
-                            if(isset($data["currentPizza"]) && in_array("mozarella", $data["currentPizza"]["toppings"])) {
+                            if(isset($data["currentPizza"]) && in_array("mozzarella", $data["currentPizza"]["toppings"])) {
                             ?> 
-                                <input type="checkbox" name="toppings[mozarella]" checked>
+                                <input type="checkbox" name="toppings[mozzarella]" checked>
                             <?php
                             } else {
                             ?> 
-                                <input type="checkbox" name="toppings[mozarella]">
+                                <input type="checkbox" name="toppings[mozzarella]">
                             <?php
                             }
                             ?>
-                            <label for="mozarella">Mozarella</label>
+                            <label for="mozzarella">Mozzarella</label>
                         </td>
                         <td>
                             <?php
@@ -371,12 +371,14 @@ function detailView($data) {
                     <?php
                     if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
                     ?> 
-                        <div id="pizza-sauce"></div> 
+                        <div id="pizza-sauce">
+
+                        </div> 
                     <?php
                     }    
                     ?>
                         <?php
-                        if(isset($data["pizzaInfo"]) && in_array("mozarella", $data["pizzaInfo"]["toppings"])) {
+                        if(isset($data["pizzaInfo"]) && in_array("mozzarella", $data["pizzaInfo"]["toppings"])) {
                         ?>
                             <div id="cheese"></div>
                         <?php
@@ -401,9 +403,18 @@ function detailView($data) {
                         }
                         ?>
                         <?php
+                        if(isset($data["pizzaInfo"]) && in_array("mozzarella", $data["pizzaInfo"]["toppings"])) {
+                        ?>
+                            <div id="mozzarella-one"></div>
+                            <div id="mozzarella-two"></div>
+                        <?php
+                        }
+                        ?>
+                        <?php
                         if(isset($data["pizzaInfo"]) && in_array("pineapple", $data["pizzaInfo"]["toppings"])) {
                         ?>
-                            <div id="pineapple"></div>
+                            <div id="pineapple-one"></div>
+                            <div id="pineapple-two"></div>
                         <?php
                         }
                         ?>  

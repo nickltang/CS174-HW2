@@ -19,22 +19,19 @@
     margin:.08in;
     border-radius:0.5in; 
     border:2px solid black; 
-    width:1in; 
     height:1in;
 }
 #cheese {
-    background-color:yellow; 
-    border-radius:0.5in; 
+    background-color:rgb(242, 242, 116); 
+    border-radius:.5in; 
     width:.9in; 
     height:.9in;
-    opacity:.8;
-    margin-left:6%;
-    margin-top:6%;
-    margin-bottom:auto;
+    margin-left:16px;
+    margin-top:-1.06in;
 }
 #pepperoni-one{
     background-color:darkred; 
-    margin-left:.04in;
+    margin-left:.09in;
     margin-top:-.6in;
     margin-bottom:auto;
     border-radius:0.5in; 
@@ -44,7 +41,7 @@
 }
 #pepperoni-two{
     background-color:darkred; 
-    margin-left:.5in;
+    margin-left:.7in;
     margin-top:-.3in;
     margin-bottom:auto;
     border-radius:0.5in; 
@@ -66,7 +63,7 @@
     background-color:rgb(99, 77, 77); 
     width:.2in; 
     height:.1in;
-    margin-left:.04in;
+    margin-left:.4in;
     margin-top:-.6in;
     margin-bottom:auto;
     position:absolute;
@@ -83,7 +80,7 @@
     background-color:rgb(99, 77, 77); 
     width:.2in; 
     height:.1in;
-    margin-left:.6in;
+    margin-left:.8in;
     margin-top:-.4in;
     position:absolute;
 }
@@ -106,16 +103,29 @@
     height:.2in;
     position:absolute;
 }
-#pineapple{
+#pineapple-one{
     border-left: .2in solid transparent;
     border-right: .9in solid transparent;
     position: absolute;
     margin-top:-.5in;
+    margin-left:.3in;
     width: 0;
     height: 0;
     border: .2in solid transparent;
     border-top: -.9in;
-    border-bottom: .2in solid rgb(243, 207, 6);
+    border-bottom: .2in solid yellow;
+}
+#pineapple-two{
+    border-left: .2in solid transparent;
+    border-right: .9in solid transparent;
+    position: absolute;
+    margin-top:-.8in;
+    margin-left:.7in;
+    width: 0;
+    height: 0;
+    border: .2in solid transparent;
+    border-top: -.9in;
+    border-bottom: .2in solid yellow;
 }
 #green-pepper-one{
     position: absolute;
@@ -131,8 +141,8 @@
     border-radius:0.3in; 
     width: 10px;
     height: 25px;
-    margin-top:-.9in;
-    margin-left: .2in;
+    margin-top:-.6in;
+    margin-left: .9in;
     background: #008000;
 }
 #green-pepper-three {
@@ -187,7 +197,7 @@
     height: 4px;
     background: grey;
 }
-#anchovies-three{
+#anchovies-three{ 
     position: absolute;
     transform: rotate(45deg);
     margin-top:-.4in;
