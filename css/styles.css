@@ -1,0 +1,198 @@
+.text-center {
+    margin: 0;
+    position: relative;
+    text-align: center;
+}
+#pizza-style {
+    float:left;
+    width:1.4in;
+    margin-top: -70px;
+}
+#crust {
+    border-radius:0.6in; 
+    border:2px solid black; 
+    width:1.2in; 
+    height:1.2in;
+}
+#pizza-sauce {
+    background-color:red; 
+    margin:.08in;
+    border-radius:0.5in; 
+    border:2px solid black; 
+    width:1in; 
+    height:1in;
+}
+#cheese {
+    background-color:yellow; 
+    border-radius:0.5in; 
+    width:.9in; 
+    height:.9in;
+    opacity:.8;
+    margin-left:6%;
+    margin-top:6%;
+    margin-bottom:auto;
+}
+#pepperoni-one{
+    background-color:darkred; 
+    margin-left:.04in;
+    margin-top:-.6in;
+    margin-bottom:auto;
+    border-radius:0.5in; 
+    width:.3in; 
+    height:.3in;
+    position:absolute;
+}
+#pepperoni-two{
+    background-color:darkred; 
+    margin-left:.5in;
+    margin-top:-.3in;
+    margin-bottom:auto;
+    border-radius:0.5in; 
+    width:.3in; 
+    height:.3in;
+    position:absolute;
+}
+#pepperoni-three{
+    background-color:darkred; 
+    margin-left:.5in;
+    margin-top:-.8in;
+    margin-bottom:auto;
+    border-radius:0.5in; 
+    width:.3in; 
+    height:.3in;
+    position:absolute;
+}
+#mushroom-one{
+    background-color:rgb(99, 77, 77); 
+    width:.2in; 
+    height:.1in;
+    margin-left:.04in;
+    margin-top:-.6in;
+    margin-bottom:auto;
+    position:absolute;
+}
+#mushroom-two{
+    background-color:rgb(99, 77, 77); 
+    width:.2in; 
+    height:.1in;
+    margin-left:.6in;
+    margin-top:-.85in;
+    position:absolute;
+}
+#mushroom-three{
+    background-color:rgb(99, 77, 77); 
+    width:.2in; 
+    height:.1in;
+    margin-left:.6in;
+    margin-top:-.4in;
+    position:absolute;
+}
+#mozzarella-one{
+    background-color:white; 
+    margin-left:.5in;
+    margin-top:-.8in;
+    margin-left: .2in;
+    border-radius:0.3in; 
+    width:.3in; 
+    height:.2in;
+    position:absolute;
+}
+#mozzarella-two{
+    background-color:white; 
+    margin-left:.45in;
+    margin-top:-.43in;
+    border-radius:0.3in; 
+    width:.3in; 
+    height:.2in;
+    position:absolute;
+}
+#pineapple{
+    border-left: .2in solid transparent;
+    border-right: .9in solid transparent;
+    position: absolute;
+    margin-top:-.5in;
+    width: 0;
+    height: 0;
+    border: .2in solid transparent;
+    border-top: -.9in;
+    border-bottom: .2in solid yellow;
+}
+#green-pepper-one{
+    position: absolute;
+    border-radius:0.3in; 
+    width: 10px;
+    height: 25px;
+    margin-top:-.7in;
+    margin-left: .6in;
+    background: #008000;
+}
+#green-pepper-two {
+    position: absolute;
+    border-radius:0.3in; 
+    width: 10px;
+    height: 25px;
+    margin-top:-.9in;
+    margin-left: .2in;
+    background: #008000;
+}
+#green-pepper-three {
+    position: absolute;
+    border-radius:0.3in; 
+
+    width: 10px;
+    height: 25px;
+    margin-top:-.3in;
+    margin-left: .3in;
+    background: #008000;
+}
+#ham-one {
+    position: absolute;
+    width: 22px;
+    height: 16px;
+    margin-top:-.3in;
+    margin-left: .45in;
+    background: #FFC0CB;
+}
+#ham-one {
+    position: absolute;
+    width: 22px;
+    height: 16px;
+    margin-top:-.3in;
+    margin-left: .45in;
+    background: #FFC0CB;
+}
+#ham-two {
+    position: absolute;
+    width: 22px;
+    height: 16px;
+    margin-top:-.6in;
+    margin-left: .25in;
+    background: #FFC0CB;
+}
+#anchovies-one{
+    position: absolute;
+    transform: rotate(45deg);
+    margin-top:-.6in;
+    margin-left: .25in;
+    width: 10px;
+    height: 4px;
+    background: grey;
+}
+#anchovies-two{
+    position: absolute;
+    transform: rotate(45deg);
+    margin-top:-.2in;
+    margin-left: .4in;
+    width: 10px;
+    height: 4px;
+    background: grey;
+}
+#anchovies-three{
+    position: absolute;
+    transform: rotate(45deg);
+    margin-top:-.4in;
+    margin-left: .5in;
+    width: 10px;
+    height: 4px;
+    background: grey;
+}

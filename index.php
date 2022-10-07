@@ -93,6 +93,7 @@ function htmlLayout($data, $view)
     <!DOCTYPE html>
     <html>
         <head>
+            <link rel="stylesheet" href="css/styles.css">
             <title>Original Pizza Place </title>
         </head>
         <body>
@@ -344,7 +345,6 @@ function editView($data) {
     <?php    
 }
 
-
 function detailView($data) {
     ?>
     <div>
@@ -368,9 +368,73 @@ function detailView($data) {
             </div>
             <div id="pizza-style">
                 <div id="crust">
-                    <div id= "pizza-sauce">                
-                        <div id="cheese"></div>
-                    </div>
+                    <?php
+                    if(isset($data["currentPizza"]) && in_array("red-sauce", $data["currentPizza"]["toppings"])) {
+                        echo "has red-sauce";
+                    ?> 
+                        <div id="pizza-sauce"></div> 
+                    <?php
+                    }    
+                    ?>
+                        <?php
+                        if(isset($data["currentPizza"]) && in_array("mozarella", $data["currentPizza"]["toppings"])) {
+                        ?>
+                            <div id="cheese"></div>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if(isset($data["currentPizza"]) && in_array("green-peppers", $data["currentPizza"]["toppings"])) {
+                        ?>
+                            <div id="green-pepper-one"></div>
+                            <div id="green-pepper-two"></div>
+                            <div id="green-pepper-three"></div>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if(isset($data["currentPizza"]) && in_array("ham", $data["currentPizza"]["toppings"])) {
+                        ?>
+                            <div id="ham-one"></div>
+                            <div id="ham-two"></div>
+                            <div id="ham-three"></div>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if(isset($data["currentPizza"]) && in_array("pepperoni", $data["currentPizza"]["toppings"])) {
+                        ?> 
+                            <div id="pepperoni-one"></div>
+                            <div id="pepperoni-two"></div>
+                            <div id="pepperoni-three"></div>
+                        <?php
+                        }
+                        ?> 
+                        <?php
+                        if(isset($data["currentPizza"]) && in_array("mushrooms", $data["currentPizza"]["toppings"])) {
+                        ?>
+                            <div id="mushroom-one"></div>
+                            <div id="mushroom-two"></div>
+                            <div id="mushroom-three"></div>
+                        <?php
+                        }
+                        ?> 
+                        <?php
+                        if(isset($data["currentPizza"]) && in_array("pineapple", $data["currentPizza"]["toppings"])) {
+                        ?>
+                            <div id="pineapple"></div>
+                        <?php
+                        }
+                        ?> 
+                        <?php
+                        if(isset($data["currentPizza"]) && in_array("anchovies", $data["currentPizza"]["toppings"])) {
+                        ?> 
+                            <div id="anchovies-one"></div>
+                            <div id="anchovies-two"></div>
+                            <div id="anchovies-three"></div>
+                        <?php
+                        }
+                        ?>           
                 </div>
             </div>
             </div>
@@ -379,7 +443,6 @@ function detailView($data) {
         ?>
     <?php
 }
-
 
 function confirmView($data) {
     ?>
