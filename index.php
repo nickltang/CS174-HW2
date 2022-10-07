@@ -372,18 +372,10 @@ function detailView($data) {
                     if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
                     ?> 
                         <div id="pizza-sauce">
-
-                        </div> 
                     <?php
                     }    
                     ?>
-                        <?php
-                        if(isset($data["pizzaInfo"]) && in_array("cheese", $data["pizzaInfo"]["toppings"])) {
-                        ?>
-                            <div id="cheese"></div>
-                        <?php
-                        }
-                        ?>
+                        <div id="cheese"></div>
                         <?php
                         if(isset($data["pizzaInfo"]) && in_array("pepperoni", $data["pizzaInfo"]["toppings"])) {
                         ?> 
@@ -444,7 +436,14 @@ function detailView($data) {
                             <div id="anchovies-three"></div>
                         <?php
                         }
-                        ?>           
+                        ?>   
+                    <?php  
+                    if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
+                    ?> 
+                        </div> 
+                    <?php
+                    }    
+                    ?>      
                 </div>
             </div>
             </div>
