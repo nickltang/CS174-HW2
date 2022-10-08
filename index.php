@@ -1,7 +1,8 @@
 <?php
-
-// Specify location of file containing all saved pizzas
-define("PIZZA_FILE", "pizza.txt");
+// Create directory to store pizza .txt files
+if(!is_dir("./pizzaMenu")) {
+    mkdir("./pizzaMenu");
+}
 
 // Determine which activity to perform and call its controller
 $activity = (isset($_REQUEST['a']) && in_array($_REQUEST['a'], ["landing", "edit", "detail", "confirm"])) 
@@ -10,14 +11,12 @@ $activity = (isset($_REQUEST['a']) && in_array($_REQUEST['a'], ["landing", "edit
 $activity();
 
 
-/**
- * Used to process perform activities realated to the blog landing page
- */
+// Processes activities related to landing/menu page
 function landingController()
 {
     // Gets pizza entries from pizza.txt file
     $data["PIZZA_ENTRIES"] = getPizzaEntries();
-    $data["PIZZA_ENTRIES"] = checkForPizzaUpdates($data["PIZZA_ENTRIES"]);   
+    $data["PIZZA_ENTRIES"] = checkForPizzaUpdates($data["PIZZA_ENTRIES"]); 
 
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
@@ -26,67 +25,76 @@ function landingController()
 }
 
 
-/**
- * Used to process perform activities realated to the blog landing page
- */
+// Processes activities related to pizza detail page
 function detailController()
 {
     $data["name"] = (isset($_REQUEST['name'])) 
         ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
         : "";
+
     $entries = getPizzaEntries();
+
+    // Increment views in $entries
     $views = $entries[$data["name"]]["visits"];
     $viewsCount = intval($views);
     $viewsCount++;
     $entries[$data["name"]]["visits"] = $viewsCount;
-    file_put_contents(PIZZA_FILE, serialize($entries));
+
+    // Save new views count to .txt file
+    file_put_contents("./pizzaMenu/pizza" . md5($data["name"]) . ".txt", serialize([
+        $data["name"] => $entries[$data["name"]]
+    ]));
 
     $data["pizzaInfo"] = $entries[$data["name"]];
 
+    // Display html
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
         : "htmlLayout";
     $layout($data, "detailView");
 }
 
-/**
- * Used to process perform activities realated to the blog landing page
- */
+
+// Processes activities related to confirm delete page
 function confirmController()
 {
     $data["NAME"] = (isset($_REQUEST['name'])) 
         ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
         : "";
+
     $data["ENTRIES"] = getPizzaEntries();
     
+    // Display html
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
         : "htmlLayout";
     $layout($data, "confirmView");
 }
 
-/**
- * Used to process perform activities realated to the blog landing page
- */
+
+// Processes activities related to edit or add pages
 function editController()
 {
+    $_POST = [];
     $data["NAME"] = (isset($_REQUEST['name'])) 
         ? filter_var($_REQUEST['name'], FILTER_SANITIZE_SPECIAL_CHARS) 
         : "";
     $data["ENTRIES"] = getPizzaEntries(); 
 
+    // If editing, load requested pizza into data
     if(array_key_exists($data["NAME"], $data["ENTRIES"])) {
         $data["currentPizza"] = $data["ENTRIES"][$data["NAME"]];
     }
 
+    // Display html
     $layout = (isset($_REQUEST['f']) && in_array($_REQUEST['f'], ["html"])) 
         ? $_REQUEST['f'] . "Layout" 
         : "htmlLayout";
-    
     $layout($data, "editView");
 }
 
 
+// Boilerplate html that wraps all views
 function htmlLayout($data, $view)
 {
     ?>
@@ -106,6 +114,7 @@ function htmlLayout($data, $view)
 }
 
 
+// Draws menu page (index.php)
 function menuView($data) {
     ?>
     <div>
@@ -170,8 +179,10 @@ function menuView($data) {
 }
 
 
+// Draws add and edit pages
+// If editing, displays edit pie header and shows existing data. Otherwise, input fields blank.
 function editView($data) {
-    // Header for add pizza
+    // Header if adding a pizza
     $header = "Add a Pie";
     if(isset($data["currentPizza"])) {
         $header = "Pie Editor";
@@ -345,6 +356,8 @@ function editView($data) {
     <?php    
 }
 
+
+// Draws pizza detail page
 function detailView($data) {
     ?>
     <div>
@@ -356,7 +369,7 @@ function detailView($data) {
         ?>
             <div class="text-center">
                 <h2> <?=$data["name"]?> </h2>
-                <h3>Price: <?=$data["pizzaInfo"]["price"]?></h3>
+                <h3>Price: $<?=$data["pizzaInfo"]["price"]?></h3>
                 <?php
                 foreach($data["pizzaInfo"]["toppings"] as $key => $value) {
                 ?>
@@ -373,7 +386,11 @@ function detailView($data) {
                         ?> 
                             <div id="pizza-sauce">
                         <?php
-                        }    
+                        } else {
+                        ?>
+                            <div id="empty-pizza-sauce">
+                        <?php
+                        }
                         ?>
                         <div id="cheese"></div>
                             <?php
@@ -438,13 +455,7 @@ function detailView($data) {
                             }
                             ?>   
                             </div>
-                        <?php  
-                        if(isset($data["pizzaInfo"]) && in_array("red-sauce", $data["pizzaInfo"]["toppings"])) {
-                        ?> 
-                            </div> 
-                        <?php
-                        }    
-                        ?>      
+                        </div>                             
             </div>
         <?php
         }
@@ -452,6 +463,8 @@ function detailView($data) {
     <?php
 }
 
+
+// Draws confirm delete page
 function confirmView($data) {
     ?>
     <div>
@@ -471,42 +484,46 @@ function confirmView($data) {
     <?php
 }
 
-
-/**
- * Used to get an array of all the blog entries currently stored on disk.
- *
- * @return array blog entries [ title1 => post1, title2 => post2 ...] if 
- *   file exists and unserializable, [] otherwise
- */
+// Gets pizza data from .txt files stored in ./pizzaMenu
 function getPizzaEntries()
 {
-    if (file_exists(PIZZA_FILE)) {
-        $entries = unserialize(file_get_contents(PIZZA_FILE));
-        if ($entries) {
-            return $entries;
+    // Get all file names in directory
+    $pizzaFiles = scandir("./pizzaMenu");
+    $entries = [];
+
+    // Extract pizza name and info from file, put in entries
+    foreach($pizzaFiles as $index => $fileName) {
+        if($fileName != "." && $fileName != "..") {
+            $pizzaInfo = unserialize(file_get_contents("./pizzaMenu/" . $fileName));
+            $currentName = array_keys($pizzaInfo)[0];
+            $entries[$currentName] = $pizzaInfo[$currentName];
         }
     }
-    return [];
+
+    return $entries;
 }
 
 
+// Checks for add, edit, or delete actions on list of pizzas, 
+// updates $entries and .txt files accordingly
 function checkForPizzaUpdates($entries) {
-    // Add/Edit Pizza Logic
-    if(array_key_exists("add", $_POST) && $_POST["name"] != "" && array_key_exists("toppings", $_POST)) {
+    // Add/Edit Pizza Logic:
+    // Checks for add keyword in post request, if name and price are set, and if toppings array exits
+    if(array_key_exists("add", $_POST) && $_POST["name"] != "" &&  $_POST["price"] != "") {
         // Format toppings into array
         $addToppings = [];
-        foreach($_POST["toppings"] as $topping => $status) {
-            if($status == "on")
-                array_push($addToppings, $topping);
+
+        if(array_key_exists("toppings", $_POST)) {
+            foreach($_POST["toppings"] as $topping => $status) {
+                if($status == "on")
+                    array_push($addToppings, $topping);
+            }
         }
 
         // Sanitize inputs
         $sanitizedName = filter_var($_POST["name"], FILTER_SANITIZE_SPECIAL_CHARS);
         $sanitizedPrice = filter_var($_POST["price"], FILTER_SANITIZE_SPECIAL_CHARS);
         
-        // Check for null price
-        if($sanitizedPrice == "")
-            $sanitizedPrice = 0;
 
         // Add or update pizza in entries array
         if(array_key_exists($sanitizedName, $entries)) {
@@ -518,15 +535,24 @@ function checkForPizzaUpdates($entries) {
                 "visits" => 0,
                 "toppings" => $addToppings
             ];    
-        }        
+        }   
+        
+        foreach($entries as $pizza => $pizzaInfo) {
+            $filename = "./pizzaMenu/pizza" . md5($pizza) . ".txt";
+            $fileContents = [$pizza => $pizzaInfo];
+            file_put_contents($filename, serialize($fileContents));
+        }
     }
 
     // Delete Pizza Logic
     if(isset($_REQUEST['delete']) && $_REQUEST['delete'] == 'true' && isset($_REQUEST['name'])) {
         unset($entries[$_REQUEST['name']]); 
-    }
+        $filename = "./pizzaMenu/pizza" . md5($_REQUEST['name']) . ".txt";
 
-    file_put_contents(PIZZA_FILE, serialize($entries));
+        if(file_exists($filename)) {
+            unlink($filename);
+        }
+    }
 
     return $entries;
 }

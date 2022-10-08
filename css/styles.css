@@ -21,6 +21,13 @@
     border:2px solid black; 
     height:1in;
 }
+#empty-pizza-sauce {
+    background-color:white; 
+    margin:.08in;
+    border-radius:0.5in; 
+    border:2px solid black; 
+    height:1in;
+}
 #cheese {
     background-color:rgb(242, 242, 116); 
     border-radius:.5in; 
