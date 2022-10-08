@@ -375,7 +375,7 @@ function detailView($data) {
                         <?php
                         }    
                         ?>
-                        <div id="cheese">
+                        <div id="cheese"></div>
                             <?php
                             if(isset($data["pizzaInfo"]) && in_array("pepperoni", $data["pizzaInfo"]["toppings"])) {
                             ?> 
@@ -445,7 +445,6 @@ function detailView($data) {
                         <?php
                         }    
                         ?>      
-                </div>
             </div>
         <?php
         }
